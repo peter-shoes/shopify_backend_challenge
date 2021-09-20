@@ -1,28 +1,31 @@
 <template>
-  <div>
-    <router-view/>
-  </div>
+  <q-layout view="lHh Lpr lFf">
+    <q-header>
+      <q-toolbar>
+
+        <q-toolbar-title>
+          Shopify Backend Application
+        </q-toolbar-title>
+
+        <div>Quasar v{{ $q.version }}</div>
+      </q-toolbar>
+    </q-header>
+
+    <q-page-container>
+      <router-view/>
+    </q-page-container>
+  </q-layout>
 </template>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<script>
 
-#nav {
-  padding: 30px;
-}
+export default {
+  name: 'LayoutDefault',
 
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
+  components: {
+  },
 
-#nav a.router-link-exact-active {
-  color: #42b983;
+  setup () {
+  }
 }
-</style>
+</script>

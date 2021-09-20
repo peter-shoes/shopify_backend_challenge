@@ -1,11 +1,23 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
-import Home from '../views/Home.vue'
+import LandingView from '../views/LandingView.vue'
+import Landing from '@/components/Landing.vue'
+import CreateAccount from '@/components/CreateAccount.vue'
 
 const routes = [
   {
     path: '/',
-    name: 'Home',
-    component: Home
+    name: 'Landing',
+    component: LandingView,
+    children: [
+      {
+        path: 'landing',
+        component: Landing
+      },
+      {
+        path: 'create-account',
+        component: CreateAccount
+      }
+    ]
   },
   {
     path: '/about',

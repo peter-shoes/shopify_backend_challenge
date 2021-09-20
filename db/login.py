@@ -23,3 +23,6 @@ def attempt_login(username):
     except:
         return False
 
+def create_new_user(username):
+    
+

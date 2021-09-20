@@ -42,14 +42,12 @@ export default {
     methods: {
       login_submit: function(username) {
         jQuery.ajax({
-          type: 'POST',
+          type: "POST",
           url: 'http://localhost:5000/login_submit',
-          json: `{'username':'${username}'}`,
-          dataType:'json',
-          success: function(stuff) {
-            console.log(stuff)
-          },
-          crossDomain: true
+          data: JSON.stringify({username: username}),
+          contentType: "application/json; charset=utf-8",
+          dataType:"json",
+          encode: false
         });
       }
     }

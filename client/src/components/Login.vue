@@ -1,7 +1,8 @@
 <template>
-  <div class="row justify-center" style="min-height: 100vh;">
-    <div class="full-height full-width q-pa-md">
-      <q-banner v-if="login_error" inline-actions class="text-white bg-red">
+  <div style="min-height: 100vh;">
+    <div class="q-pa-md" style="max-width: 400px">
+      <h5>Create a new account</h5>
+      <q-banner v-if="this.login_error" inline-actions class="text-white bg-red">
         Username or Password is incorrect!
       </q-banner>
       <q-form
@@ -21,7 +22,7 @@
         </div>
       </q-form>
       <div>
-        <router-link to="create_account"><q-btn label="Create Account" color="secondary" style="margin-top:1em;"/></router-link>
+        <router-link to="create_account" style="text-decoration:none;color=inherit;"><q-btn label="Create Account" color="secondary" style="margin-top:1em;"/></router-link>
       </div>
     </div>
   </div>
@@ -43,8 +44,14 @@ export default {
         this.login_error = true;
         this.$forceUpdate();
       },
+      login: function(username) {
+        console.log(username)
+        // move username to store
+        // route to user's home page
+      },
       submit: async function(username, password) {
         var hack=false
+        var login = false
         await jQuery.ajax({
           type: "POST",
           url: 'http://localhost:5000/login',
@@ -57,13 +64,13 @@ export default {
               hack=true
             }
             if (rx['status'] == 'success') {
-              // fix later
-              console.log(rx)
+              login = true
             }
           }
         });
         // ashamed of this workaround, but I am very tired
         if (hack) {this.update()}
+        if (login) {this.login(username)}
       }
     }
 }

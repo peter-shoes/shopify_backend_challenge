@@ -1,16 +1,9 @@
-from flask import Flask
 from flask.json import jsonify
-from flask_sqlalchemy import SQLAlchemy
-from flask_login import LoginManager, UserMixin, login_user
 from werkzeug.security import generate_password_hash, check_password_hash
 from app import db, app
 
-# login setup
-login_manager = LoginManager()
-login_manager.init_app(app)
-
 # create user table
-class User(UserMixin, db.Model):
+class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(20), unique=True, nullable=False)
     password = db.Column(db.String(255), nullable=False)
@@ -41,11 +34,6 @@ class User(UserMixin, db.Model):
             id=self.id,
             username=self.username
         )
-
-
-@login_manager.user_loader
-def load_user(user_id):
-    return User.query.get(int(user_id))
 
 def create_new_user(username, password):
     user = User(username=username, password=password)

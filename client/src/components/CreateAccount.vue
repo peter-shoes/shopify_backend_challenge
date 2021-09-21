@@ -1,12 +1,12 @@
 <template>
   <div style="min-height: 100vh;">
     <div class="q-pa-md" style="max-width: 400px">
-      <q-banner v-if="creation_error" inline-actions class="text-white bg-red">
-        Username already exists!
-      </q-banner>
       <q-form
       class="q-gutter-md">
       <h5>Create a new account</h5>
+      <q-banner v-if="this.creation_error" inline-actions class="text-white bg-red">
+        Username already exists!
+      </q-banner>
         <q-input
           filled
           v-model="username"
@@ -43,9 +43,9 @@ export default {
         this.creation_error = true;
         this.$forceUpdate();
       },
-      submit: function(username, password) {
+      submit: async function(username, password) {
         var hack=false
-        jQuery.ajax({
+        await jQuery.ajax({
           type: "POST",
           url: 'http://localhost:5000/create_user',
           data: JSON.stringify({username: username, password: password}),

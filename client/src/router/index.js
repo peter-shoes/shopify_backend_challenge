@@ -1,17 +1,17 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
-import LandingView from '../views/LandingView.vue'
-import Landing from '@/components/Landing.vue'
+import Landing from '../views/Landing.vue'
+import Login from '@/components/Login.vue'
 import CreateAccount from '@/components/CreateAccount.vue'
 
 const routes = [
   {
     path: '/',
     name: 'Landing',
-    component: LandingView,
+    component: Landing,
     children: [
       {
         path: '',
-        component: Landing
+        component: Login
       },
       {
         path: 'create_account',

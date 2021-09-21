@@ -1,19 +1,26 @@
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, json, request, jsonify
 
 login = Blueprint('login', __name__)
 
-@login.route('/login_submit', methods=['GET','POST'])
+@login.route('/login', methods=['POST'])
 def login_submit():
-    if request.method == 'GET':
-        return('This is a POST method!')
-    if request.method == 'POST':
-        from db.login import attempt_login
-        content = request.json
-        if attempt_login(username=content.get('username')):
-            return jsonify({'status':'success'})
-        else:
-            return jsonify({'status':'failure'})
+    from db.login import User
+    content = request.json
+    user = User.authenticate(username=content.get('username'), password=content.get('password'))
+    if user:
+        return jsonify(
+            {'status':'success',
+            'user':user}
+        )
+    else:
+        return jsonify({'status':'failure'})
 
-@login.route('/create-user', methods=['POST'])
+@login.route('/create_user', methods=['POST'])
 def create_user():
-    
+    from db.login import User
+    from db.login import create_new_user
+    content = request.json
+    user = User(content.get('username'), content.get('password'))
+    create_new_user(user)
+
+

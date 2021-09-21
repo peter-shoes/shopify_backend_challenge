@@ -10,11 +10,11 @@ const routes = [
     component: LandingView,
     children: [
       {
-        path: 'landing',
+        path: '',
         component: Landing
       },
       {
-        path: 'create-account',
+        path: 'create_account',
         component: CreateAccount
       }
     ]

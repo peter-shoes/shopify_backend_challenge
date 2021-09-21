@@ -17,7 +17,7 @@
           lazy-rules
         ></q-input>
         <div>
-          <q-btn v-on:click="submit(username, password)" label="Submit" type="submit" color="primary"></q-btn>
+          <q-btn v-on:click="submit(username, password)" label="Submit" color="primary"></q-btn>
         </div>
       </q-form>
     </div>
@@ -25,12 +25,19 @@
 </template>
 
 <script>
+import jQuery from 'jquery'
 export default {
     name: 'CreateAccount',
     methods: {
       submit: function(username, password) {
-        console.log(username)
-        console.log(password)
+        jQuery.ajax({
+          type: "POST",
+          url: 'http://localhost:5000/create_user',
+          data: JSON.stringify({username: username, password: password}),
+          contentType: "application/json; charset=utf-8",
+          dataType:"json",
+          encode: false
+        });
       }
     },
     data () {

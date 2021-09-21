@@ -1,7 +1,7 @@
 <template>
   <div style="min-height: 100vh;">
     <div class="q-pa-md" style="max-width: 400px">
-      <h5>Create a new account</h5>
+      <h5>Login to the Image Repo!</h5>
       <q-banner v-if="this.login_error" inline-actions class="text-white bg-red">
         Username or Password is incorrect!
       </q-banner>
@@ -40,14 +40,15 @@ export default {
       }
     },
     methods: {
-      update: function() {
-        this.login_error = true;
+      update: function(hack) {
+        this.login_error = hack;
         this.$forceUpdate();
       },
       login: function(username) {
         console.log(username)
         // move username to store
         // route to user's home page
+        this.$router.push(`/home/${username}`)
       },
       submit: async function(username, password) {
         var hack=false
@@ -69,7 +70,7 @@ export default {
           }
         });
         // ashamed of this workaround, but I am very tired
-        if (hack) {this.update()}
+        this.update(hack)
         if (login) {this.login(username)}
       }
     }

@@ -39,12 +39,13 @@ export default {
       }
     },
     methods: {
-      update: function() {
-        this.creation_error = true;
+      update: function(hack) {
+        this.creation_error = hack;
         this.$forceUpdate();
       },
       submit: async function(username, password) {
         var hack=false
+        var home = false
         await jQuery.ajax({
           type: "POST",
           url: 'http://localhost:5000/create_user',
@@ -57,11 +58,13 @@ export default {
               hack=true
             }
             if (rx['status'] == 'success'){
-              console.log(rx)
+              hack=false
+              home= true
             }
           }
         });
-        if (hack) {this.update()}
+        this.update(hack)
+        if (home) {this.$router.push('/')}
       }
     }
 }

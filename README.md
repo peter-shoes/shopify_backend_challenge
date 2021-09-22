@@ -22,6 +22,8 @@ and xterm will open, a few deps will be installed (because I didn't have time to
 I started this at like noon on 9/20, so this isn't how I'd like to do deployment, but navigate to localhost:8080 to check out the app
 
 # using the app
+navigate to localhost:8080 to get to the app
+
 ## create a new user
 create a new user by clicking the create user button and filling out the form
 

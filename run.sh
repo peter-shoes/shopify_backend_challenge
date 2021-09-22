@@ -1,7 +1,9 @@
 #!/bin/bash
 
 cd client
+npm install 
+npm install @vue/cli
 
 xterm -hold -e python ../app.py &
 
-xterm -hold -e npm install & npm install @vue/cli & npm run serve 
+xterm -hold -e npm run serve

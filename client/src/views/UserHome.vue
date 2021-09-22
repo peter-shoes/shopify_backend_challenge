@@ -13,12 +13,14 @@
       @failed="onFailed"
       @rejected="onRejected"
       />
+    <img v-for="photo in this.$store.state.photos" v-bind:key="photo" :src="photo">
   </div>
 </template>
 
 <script>
-// import { useQuasar } from 'quasar'
-// const $q = useQuasar()
+import jQuery from 'jquery'
+
+const $ = jQuery
 
 export default {
   name: 'Home',
@@ -40,6 +42,7 @@ export default {
     onUploaded(info) {
       console.log(info)
       this.$refs.uploader.reset()
+      this.getPhotos()
       // $q.notify({
       //   type: 'positive',
       //   message: `${info.name} successfully uploaded`
@@ -62,7 +65,31 @@ export default {
       //   type: 'negative',
       //   message: `${rejectedEntries.length} file(s) did not pass validation constraints`
       // })
+    },
+    getPhotos: async function() {
+      const names = await $.get(`http://localhost:5000/get_user_photos/${this.$route.params.username}`, function(status){
+        console.log(status)
+      })
+      for (var i in names['files']) {
+        var file_name = names['files'][i]
+        const file = `http://localhost:5000/get_item/${this.$route.params.username}/${file_name}`
+        this.$store.commit('add_photo', file)
+      }
     }
+
+  },
+  created () {
+    this.unsubscribe = this.$store.subscribe((mutation) => {
+      if (mutation.type === 'add_photo') {
+          this.$forceUpdate();
+      }
+    })
+  },
+  mounted () {
+    this.getPhotos()
+  },
+  beforeUnmount() {
+    this.unsubscribe()
   }
 }
 </script>

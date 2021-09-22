@@ -1,19 +1,24 @@
 <template>
   <div>
-    <h4>Welcome Home {{$route.params.username}}!</h4>
+    <q-card :bordered="true" style="text-align:center;">
+      <h4>{{$route.params.username}}'s Page</h4>
+      <h5 v-if="$route.params.username == $store.state.logged_in_user">Welcome Home {{$route.params.username}}!</h5>
+    </q-card>
     <q-uploader
-      ref="uploader"
-      label="Upload Picture"
-      accept="image/*"
-      :max-files="1"
-      color="secondary"
-      :form-fields="[{name:'username', value: $route.params.username}]"
-      :factory="uploadImage"
-      @uploaded="onUploaded"
-      @failed="onFailed"
-      @rejected="onRejected"
-      />
+    ref="uploader"
+    label="Upload Picture"
+    accept="image/*"
+    :max-files="1"
+    color="secondary"
+    :form-fields="[{name:'username', value: $route.params.username}]"
+    :factory="uploadImage"
+    @uploaded="onUploaded"
+    @failed="onFailed"
+    @rejected="onRejected"
+    />
+    <div style="margin-top:1em;">
       <q-img v-for="photo in this.$store.state.photos" v-bind:key="photo" :src="photo"  height="200px" width="200px" ratio="1"/>
+    </div>
   </div>
 </template>
 

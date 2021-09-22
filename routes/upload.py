@@ -6,19 +6,16 @@ upload = Blueprint('upload', __name__)
 
 @upload.route('/upload', methods=['POST'])
 def upload_picture():
-    try:
-        username = request.form.get('username')
-        uploads_dir = os.path.join('user_photos/', username)
-        os.makedirs(uploads_dir, exist_ok=True)
-        for fname in request.files:
-            f = request.files.get(fname)
-            print(f)
-            f.save(uploads_dir +'/'+secure_filename(fname))
-        return jsonify(
-            {'status':'success'}
-        )
-    except:
-        return jsonify({'status':'failure'})
+    username = request.form.get('username')
+    uploads_dir = os.path.join('user_photos/', username)
+    os.makedirs(uploads_dir, exist_ok=True)
+    for fname in request.files:
+        f = request.files.get(fname)
+        print(f)
+        f.save(uploads_dir +'/'+secure_filename(fname))
+    return jsonify(
+        {'status':'success'}
+    )
 
 @upload.route('/get_user_photos/<username>', methods=['GET'])
 def get_photos(username):

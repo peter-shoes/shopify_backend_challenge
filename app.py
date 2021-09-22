@@ -20,6 +20,7 @@ import database
 database.__init__
 
 import routes
+routes.__init__
 
 # register blueprints
 app.register_blueprint(routes.login.login)

@@ -4,7 +4,7 @@
       <h4>{{$route.params.username}}'s Page</h4>
       <h5 v-if="$route.params.username == $store.state.logged_in_user">Welcome Home {{$route.params.username}}!</h5>
     </q-card>
-    <q-uploader
+    <q-uploader v-if="this.$store.state.logged_in_user == this.$route.params.username"
     ref="uploader"
     label="Upload Picture"
     accept="image/*"
@@ -17,7 +17,7 @@
     @rejected="onRejected"
     />
     <div style="margin-top:1em;">
-      <q-img v-for="photo in this.$store.state.photos" v-bind:key="photo" :src="photo"  height="200px" width="200px" ratio="1"/>
+      <q-img v-for="photo in this.$store.state.photos[this.$route.params.username]" v-bind:key="photo" :src="photo"  height="200px" width="200px" ratio="1"/>
     </div>
   </div>
 </template>
@@ -37,15 +37,13 @@ export default {
     }
   },
   methods: {
-    uploadImage(file) {
-      console.log(file)
+    uploadImage() {
       return {
         url: 'http://localhost:5000/upload',
         method: 'POST'
       }
     },
-    onUploaded(info) {
-      console.log(info)
+    onUploaded() {
       this.$refs.uploader.reset()
       this.getPhotos()
       // $q.notify({
@@ -73,7 +71,7 @@ export default {
     },
     getPhotos: async function() {
       const names = await $.get(`http://localhost:5000/get_user_photos/${this.$route.params.username}`, function(status){
-        console.log(status)
+        if (status['status'] == 'failure') {this['files']=[]}
       })
       var files = []
       for (var i in names['files']) {
@@ -81,7 +79,8 @@ export default {
         const file = `http://localhost:5000/get_item/${this.$route.params.username}/${file_name}`
         files.push(file)
       }
-      this.$store.commit('add_photo', files)
+      const info = {username: this.$route.params.username, photos: files}
+      this.$store.commit('add_photo', info)
     }
 
   },
@@ -94,6 +93,7 @@ export default {
   },
   mounted () {
     this.getPhotos()
+    this.$forceUpdate()
   },
   beforeUnmount() {
     this.unsubscribe()

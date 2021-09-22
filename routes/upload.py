@@ -19,8 +19,11 @@ def upload_picture():
 
 @upload.route('/get_user_photos/<username>', methods=['GET'])
 def get_photos(username):
-    uploads_dir = os.path.join('user_photos/', username)
-    return jsonify({'files': [(i) for i in os.listdir(uploads_dir)]})
+    try:
+        uploads_dir = os.path.join('user_photos/', username)
+        return jsonify({'files': [(i) for i in os.listdir(uploads_dir)]})
+    except:
+        return jsonify({'status':'failure'})
 
 # I'm aware that this is really sloppy
 @upload.route('/get_item/<username>/<item>', methods=['GET'])

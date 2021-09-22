@@ -13,7 +13,7 @@
       @failed="onFailed"
       @rejected="onRejected"
       />
-    <img v-for="photo in this.$store.state.photos" v-bind:key="photo" :src="photo">
+      <q-img v-for="photo in this.$store.state.photos" v-bind:key="photo" :src="photo"  height="200px" width="200px" ratio="1"/>
   </div>
 </template>
 
@@ -70,11 +70,13 @@ export default {
       const names = await $.get(`http://localhost:5000/get_user_photos/${this.$route.params.username}`, function(status){
         console.log(status)
       })
+      var files = []
       for (var i in names['files']) {
         var file_name = names['files'][i]
         const file = `http://localhost:5000/get_item/${this.$route.params.username}/${file_name}`
-        this.$store.commit('add_photo', file)
+        files.push(file)
       }
+      this.$store.commit('add_photo', files)
     }
 
   },

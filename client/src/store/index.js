@@ -10,7 +10,7 @@ export default createStore({
       state.logged_in_user = user
     },
     add_photo(state, photo) {
-      state.photos.push(photo)
+      state.photos = photo
     }
   },
   actions: {

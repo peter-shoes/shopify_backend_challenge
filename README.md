@@ -13,7 +13,11 @@ then, give the run command execute permissions:
 
 >sudo chmod u+x run.sh
 
-you should be good to go!
+you should be good to go! just run 
+
+>./run.sh 
+
+and xterm will open, a few deps will be installed (because I didn't have time to write a real deploy) and you're good to go!
 
 I started this at like noon on 9/20, so this isn't how I'd like to do deployment, but navigate to localhost:8080 to check out the app
 

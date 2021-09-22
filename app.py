@@ -23,6 +23,7 @@ import routes
 
 # register blueprints
 app.register_blueprint(routes.login.login)
+app.register_blueprint(routes.upload.upload)
 
 if __name__ == '__main__':
     app.run()

@@ -1,4 +1,5 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
+import store from '@/store/index.js';
 import Landing from '@/views/Landing.vue'
 import Login from '@/components/Login.vue'
 import CreateAccount from '@/components/CreateAccount.vue'
@@ -24,7 +25,14 @@ const routes = [
     path: '/home/:username',
     name: 'Home',
     component: Home,
-    props: true
+    props: true,
+    beforeEnter: (to, from, next) => {
+      if(store.state.logged_in_user == null) {
+          next(false);
+      } else {
+          next();
+      }
+  }
   }
 ]
 

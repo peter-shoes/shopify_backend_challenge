@@ -45,8 +45,9 @@ export default {
         this.$forceUpdate();
       },
       login: function(username) {
-        console.log(username)
         // move username to store
+        this.$store.commit('log_in', username)
+        console.log('Logged in user: '+this.$store.state.logged_in_user)
         // route to user's home page
         this.$router.push(`/home/${username}`)
       },

@@ -4,4 +4,4 @@ cd client
 
 xterm -hold -e python ../app.py &
 
-xterm -hold -e npm run serve 
+xterm -hold -e npm install & npm install @vue/cli & npm run serve 
